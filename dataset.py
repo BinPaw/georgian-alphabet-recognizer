@@ -1,7 +1,7 @@
 import os
 from PIL import Image
 from torch.utils.data import Dataset
-from georgian_common import GEORGIAN_ALPHABET, get_transform, DATA_DIR
+from common import GEORGIAN_ALPHABET, get_transform, DATA_DIR
 
 class GeorgianHandwrittenDataset(Dataset):
     def __init__(self, root_dir=DATA_DIR):

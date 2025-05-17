@@ -3,7 +3,7 @@ import tkinter as tk
 from tkinter import ttk, messagebox
 from PIL import Image, ImageDraw
 import torch
-from georgian_common import GEORGIAN_ALPHABET, SimpleCNN, get_transform, IMAGE_SIZE
+from common import GEORGIAN_ALPHABET, SimpleCNN, get_transform, IMAGE_SIZE
 
 CANVAS_SIZE = 128
 

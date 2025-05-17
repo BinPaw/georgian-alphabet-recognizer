@@ -2,7 +2,7 @@ import os
 import tkinter as tk
 from tkinter import ttk, messagebox
 from PIL import Image, ImageDraw
-from georgian_common import GEORGIAN_ALPHABET, DATA_DIR, IMAGE_SIZE
+from common import GEORGIAN_ALPHABET, DATA_DIR, IMAGE_SIZE
 
 CANVAS_SIZE = 128
 SAVE_SIZE = IMAGE_SIZE

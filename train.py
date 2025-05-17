@@ -5,8 +5,8 @@ from torch.utils.data import DataLoader, Subset
 from sklearn.model_selection import StratifiedShuffleSplit
 import numpy as np
 import os
-from georgian_handwritten_dataset import GeorgianHandwrittenDataset
-from georgian_common import GEORGIAN_ALPHABET, SimpleCNN, DATA_DIR
+from dataset import GeorgianHandwrittenDataset
+from common import GEORGIAN_ALPHABET, SimpleCNN, DATA_DIR
 
 # Hyperparameters
 BATCH_SIZE = 32
