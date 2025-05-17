@@ -157,15 +157,18 @@ def main():
             print(f"No model directories found in {CHECKPOINTS_DIR}")
             return
         
-        latest_dir = max(model_dirs)
-        model_files = [f for f in os.listdir(os.path.join(CHECKPOINTS_DIR, latest_dir)) 
+        if 'default' not in model_dirs:
+            print(f"No 'default' directory found in {CHECKPOINTS_DIR}")
+            return
+        
+        model_files = [f for f in os.listdir(os.path.join(CHECKPOINTS_DIR, 'default')) 
                        if f.endswith('.pth')]
         
         if not model_files:
-            print(f"No model files found in {os.path.join(CHECKPOINTS_DIR, latest_dir)}")
+            print(f"No model files found in {os.path.join(CHECKPOINTS_DIR, 'default')}")
             return
         
-        args.model_path = os.path.join(CHECKPOINTS_DIR, latest_dir, model_files[0])
+        args.model_path = os.path.join(CHECKPOINTS_DIR, 'default', model_files[0])
         print(f"Using model: {args.model_path}")
     
     # Load model
