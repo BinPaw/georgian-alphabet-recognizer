@@ -29,7 +29,7 @@ def train_model(model, train_loader, val_loader, epochs=EPOCHS, lr=LEARNING_RATE
         dict: Training history and best model path
     """
     # Create a timestamped directory for this training run
-    timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+    timestamp = datetime.now().strftime("%Y-%m-%d %H-%M-%S")
     run_dir = os.path.join(checkpoint_dir, timestamp)
     os.makedirs(run_dir, exist_ok=True)
     
@@ -92,9 +92,9 @@ def train_model(model, train_loader, val_loader, epochs=EPOCHS, lr=LEARNING_RATE
         # Save best model
         if val_acc > best_val_acc:
             best_val_acc = val_acc
-            best_model_path = os.path.join(run_dir, f'model_epoch_{epoch}_acc_{val_acc:.4f}.pth')
-            torch.save(model.state_dict(), best_model_path)
-            print(f"Saved new best model to {best_model_path}")
+            # best_model_path = os.path.join(run_dir, f'model_epoch_{epoch}_acc_{val_acc:.4f}.pth')
+            # torch.save(model.state_dict(), best_model_path)
+            # print(f"Saved new best model to {best_model_path}")
     
     # Save final model
     final_model_path = os.path.join(run_dir, f'model_final_acc_{val_acc:.4f}.pth')
