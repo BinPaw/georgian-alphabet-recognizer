@@ -1,0 +1,3 @@
+"""
+Georgian Character Recognition package.
+""" 
