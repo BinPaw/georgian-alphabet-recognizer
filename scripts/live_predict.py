@@ -24,7 +24,7 @@ class DrawingApp:
     """
     Drawing application for character recognition.
     """
-    def __init__(self, model, transform, width=400, height=400):
+    def __init__(self, model, transform, width=128, height=128):
         self.root = tk.Tk()
         self.root.title("Georgian Character Recognition")
         
@@ -33,12 +33,14 @@ class DrawingApp:
         self.transform = transform
         
         # Drawing area
-        self.canvas = tk.Canvas(self.root, width=width, height=height, bg="black")
+        self.canvas = tk.Canvas(self.root, width=width, height=height, bg="white")
         self.canvas.pack(side=tk.LEFT)
         self.canvas.bind("<B1-Motion>", self.paint)
+        self.canvas.bind("<ButtonPress-1>", self.mouse_down)
+        self.canvas.bind("<ButtonRelease-1>", self.mouse_up)
         
         # Create a PIL image to draw on
-        self.image = Image.new("L", (width, height), color=0)
+        self.image = Image.new("L", (width, height), color=255)
         self.draw = ImageDraw.Draw(self.image)
         
         # Prediction display
@@ -74,6 +76,14 @@ class DrawingApp:
         # Last mouse position
         self.last_x, self.last_y = None, None
     
+    def mouse_down(self, event):
+        """Handle mouse button press."""
+        self.last_x, self.last_y = event.x, event.y
+    
+    def mouse_up(self, event):
+        """Handle mouse button release."""
+        self.last_x, self.last_y = None, None
+    
     def paint(self, event):
         """Handle mouse movement for drawing."""
         x, y = event.x, event.y
@@ -82,8 +92,8 @@ class DrawingApp:
             # Draw on canvas
             self.canvas.create_line(
                 (self.last_x, self.last_y, x, y),
-                fill="white",
-                width=15,
+                fill="black",
+                width=12,
                 capstyle=tk.ROUND,
                 smooth=True
             )
@@ -91,8 +101,8 @@ class DrawingApp:
             # Draw on PIL image
             self.draw.line(
                 [self.last_x, self.last_y, x, y],
-                fill=255,
-                width=15,
+                fill=0,
+                width=12,
                 joint="curve"
             )
         
@@ -101,7 +111,7 @@ class DrawingApp:
     def clear(self):
         """Clear the canvas and image."""
         self.canvas.delete("all")
-        self.image = Image.new("L", self.image.size, color=0)
+        self.image = Image.new("L", self.image.size, color=255)
         self.draw = ImageDraw.Draw(self.image)
         self.last_x, self.last_y = None, None
         
