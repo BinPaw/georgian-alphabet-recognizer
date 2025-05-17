@@ -48,7 +48,7 @@ def main():
         checkpoint_dir=args.checkpoint_dir
     )
     
-    print(f"Best model saved to: {results['best_model_path']}")
+    print(f"Final model saved to: {results['final_model_path']}")
 
 if __name__ == '__main__':
     main() 
