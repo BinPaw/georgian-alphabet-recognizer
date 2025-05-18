@@ -23,7 +23,7 @@ IMAGE_SIZE = 32
 
 # Training parameters
 BATCH_SIZE = 32
-EPOCHS = 150
+EPOCHS = 15
 LEARNING_RATE = 0.001
 VAL_SPLIT = 0.1
 
