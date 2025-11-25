@@ -2,6 +2,7 @@
 Training functions for the Georgian Character Recognition project.
 """
 import os
+from typing import Any
 import torch
 import torch.nn as nn
 import torch.optim as optim
@@ -89,9 +90,9 @@ def train_model(model, train_loader, val_loader, epochs=EPOCHS, lr=LEARNING_RATE
               f"Val Loss: {val_loss:.4f} | Val Acc: {val_acc:.4f} | "
               f"Time: {epoch_time:.2f}s")
         
-        # Save best model
         if val_acc > best_val_acc:
             best_val_acc = val_acc
+            # Save best model
             # best_model_path = os.path.join(run_dir, f'model_epoch_{epoch}_acc_{val_acc:.4f}.pth')
             # torch.save(model.state_dict(), best_model_path)
             # print(f"Saved new best model to {best_model_path}")
@@ -100,7 +101,7 @@ def train_model(model, train_loader, val_loader, epochs=EPOCHS, lr=LEARNING_RATE
     final_model_path = os.path.join(run_dir, f'model_final_acc_{val_acc:.4f}.pth')
     torch.save(model.state_dict(), final_model_path)
     
-    print(f"Training complete. Best Val Acc: {best_val_acc:.4f}")
+    print(f"Training complete. Best Val Acc: {best_val_acc:.4f}. Final Val Acc: {val_acc:.4f}.")
     
     return {
         'history': history,
