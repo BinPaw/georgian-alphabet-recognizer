@@ -109,22 +109,23 @@ def train_model(model, train_loader, val_loader, epochs=EPOCHS, lr=LEARNING_RATE
         'final_model_path': final_model_path
     }
 
-def evaluate_model(model, data_loader, criterion=None):
+def evaluate_model(model, data_loader):
     """
     Evaluate a model on the given data loader.
     
     Args:
         model: The model to evaluate
         data_loader: DataLoader for evaluation data
-        criterion: Loss function (if None, only accuracy is computed)
         
     Returns:
-        tuple: (loss, accuracy) if criterion is provided, else (None, accuracy)
+        tuple: (loss, accuracy)
     """
     model.eval()
     running_loss = 0.0
     correct = 0
     total = 0
+
+    criterion = nn.CrossEntropyLoss()
     
     with torch.no_grad():
         for images, labels in data_loader:
