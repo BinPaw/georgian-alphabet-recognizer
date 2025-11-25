@@ -13,6 +13,7 @@ GEORGIAN_ALPHABET = [
 # Paths
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 DATA_DIR = os.path.join(BASE_DIR, 'data')
+DATA_ORIGINAL_DIR = os.path.join(BASE_DIR, 'data_original')
 CHECKPOINTS_DIR = os.path.join(BASE_DIR, 'checkpoints')
 
 # Ensure directories exist

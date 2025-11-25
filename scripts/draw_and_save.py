@@ -14,7 +14,7 @@ import numpy as np
 # Add parent directory to path to allow importing from src
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
-from src.config import GEORGIAN_ALPHABET, DATA_DIR
+from src.config import GEORGIAN_ALPHABET, DATA_ORIGINAL_DIR
 
 class DrawingApp:
     """
@@ -121,17 +121,25 @@ class DrawingApp:
         char_dir = os.path.join(self.save_dir, char)
         os.makedirs(char_dir, exist_ok=True)
         
-        # Count existing files to generate a new filename
-        existing_files = len([f for f in os.listdir(char_dir) if f.endswith('.png')])
-        filename = f"{existing_files + 1:04d}.png"
-        filepath = os.path.join(char_dir, filename)
+        # Check existing files to generate a new filename
+        existing_files = [f for f in os.listdir(char_dir) if f.endswith('.png')]
+        filename_prefix = f"{char}_"
+        filepath = None
+        for i in range(1000):
+            filename = f"{filename_prefix}{i:03d}.png"
+            if filename not in existing_files:
+                filepath = os.path.join(char_dir, filename)
+                break
         
         # Resize to a smaller image (32x32)
         resized_img = self.image.resize((32, 32), Image.LANCZOS)
         
         # Save the image
-        resized_img.save(filepath)
-        self.status_var.set(f"Saved to {filepath}")
+        if filepath:
+            resized_img.save(filepath)
+            self.status_var.set(f"Saved to {filepath}")
+        else :
+            self.status_var.set(f"Could not save because character folder is full")
         
         # Clear for next drawing
         self.clear()
@@ -143,7 +151,7 @@ class DrawingApp:
 def main():
     """Main function to run the drawing app."""
     parser = argparse.ArgumentParser(description='Draw and save Georgian character samples')
-    parser.add_argument('--save-dir', type=str, default=DATA_DIR, help='Directory to save character samples')
+    parser.add_argument('--save-dir', type=str, default=DATA_ORIGINAL_DIR, help='Directory to save character samples')
     args = parser.parse_args()
     
     # Create save directory if it doesn't exist
