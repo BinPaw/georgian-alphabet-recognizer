@@ -125,7 +125,7 @@ class DrawingApp:
         existing_files = [f for f in os.listdir(char_dir) if f.endswith('.png')]
         filename_prefix = f"{char}_"
         filepath = None
-        for i in range(1000):
+        for i in range(1, 1000):
             filename = f"{filename_prefix}{i:03d}.png"
             if filename not in existing_files:
                 filepath = os.path.join(char_dir, filename)
