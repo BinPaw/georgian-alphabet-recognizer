@@ -8,17 +8,15 @@ import argparse
 import os
 import sys
 import torch
-import numpy as np
 import tkinter as tk
 from PIL import Image, ImageDraw
-from torchvision import transforms
 
 # Add parent directory to path to allow importing from src
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
-from src.models import SimpleCNN
-from src.config import GEORGIAN_ALPHABET, DEVICE, CHECKPOINTS_DIR
+from src.config import GEORGIAN_ALPHABET, DEVICE
 from src.utils.data import get_transform
+from src.utils.load_model import load_model
 
 class DrawingApp:
     """
@@ -150,32 +148,8 @@ def main():
     parser.add_argument('--model-path', type=str, help='Path to the trained model')
     args = parser.parse_args()
     
-    # Find latest model if not specified
-    if args.model_path is None:
-        model_dirs = [d for d in os.listdir(CHECKPOINTS_DIR) if os.path.isdir(os.path.join(CHECKPOINTS_DIR, d))]
-        if not model_dirs:
-            print(f"No model directories found in {CHECKPOINTS_DIR}")
-            return
-        
-        if 'default' not in model_dirs:
-            print(f"No 'default' directory found in {CHECKPOINTS_DIR}")
-            return
-        
-        model_files = [f for f in os.listdir(os.path.join(CHECKPOINTS_DIR, 'default')) 
-                       if f.endswith('.pth')]
-        
-        if not model_files:
-            print(f"No model files found in {os.path.join(CHECKPOINTS_DIR, 'default')}")
-            return
-        
-        args.model_path = os.path.join(CHECKPOINTS_DIR, 'default', model_files[0])
-        print(f"Using model: {args.model_path}")
-    
-    # Load model
-    model = SimpleCNN(num_classes=len(GEORGIAN_ALPHABET))
-    model.load_state_dict(torch.load(args.model_path, map_location=DEVICE))
-    model.to(DEVICE)
-    model.eval()
+    # Load the model from the path
+    model = load_model(args.model_path)
     
     # Get transform
     transform = get_transform()

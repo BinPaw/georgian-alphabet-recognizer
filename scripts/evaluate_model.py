@@ -19,6 +19,7 @@ from src.dataset import GeorgianHandwrittenDataset
 from src.training.train import evaluate_model
 from src.config import GEORGIAN_ALPHABET, DEVICE, CHECKPOINTS_DIR, BATCH_SIZE
 from src.utils.visualization import plot_sample_images
+from src.utils.load_model import load_model
 
 def plot_confusion_matrix(cm, class_names):
     """
@@ -45,24 +46,8 @@ def main():
     parser.add_argument('--confusion-matrix', action='store_true', help='Plot confusion matrix')
     args = parser.parse_args()
     
-    # Find latest model if not specified
-    if args.model_path is None:
-        model_dirs = [d for d in os.listdir(CHECKPOINTS_DIR) if os.path.isdir(os.path.join(CHECKPOINTS_DIR, d))]
-        if not model_dirs:
-            print(f"No model directories found in {CHECKPOINTS_DIR}")
-            return
-        
-        latest_dir = max(model_dirs)
-        model_files = [f for f in os.listdir(os.path.join(CHECKPOINTS_DIR, latest_dir)) 
-                       if f.endswith('.pth')]
-        
-        if not model_files:
-            print(f"No model files found in {os.path.join(CHECKPOINTS_DIR, latest_dir)}")
-            return
-        
-        args.model_path = os.path.join(CHECKPOINTS_DIR, latest_dir, model_files[0])
-    
-    print(f"Using model: {args.model_path}")
+    # Load the model from the path
+    model = load_model(args.model_path)
     
     # Create dataset
     print("Loading dataset...")
@@ -74,12 +59,6 @@ def main():
     
     # Create data loader
     data_loader = torch.utils.data.DataLoader(dataset, batch_size=args.batch_size)
-    
-    # Load model
-    print("Loading model...")
-    model = SimpleCNN(num_classes=len(dataset.class_to_idx))
-    model.load_state_dict(torch.load(args.model_path, map_location=DEVICE))
-    model.to(DEVICE)
     
     # Evaluate model
     print("Evaluating model...")
