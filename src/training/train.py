@@ -131,22 +131,18 @@ def evaluate_model(model, data_loader):
         for images, labels in data_loader:
             images, labels = images.to(DEVICE), labels.to(DEVICE)
             outputs = model(images)
-            
-            if criterion is not None:
-                loss = criterion(outputs, labels)
-                running_loss += loss.item() * images.size(0)
-            
+
+            loss = criterion(outputs, labels)
+            running_loss += loss.item() * images.size(0)
+
             _, predicted = outputs.max(1)
             correct += (predicted == labels).sum().item()
             total += labels.size(0)
     
+    loss = running_loss / total
     accuracy = correct / total
     
-    if criterion is not None:
-        loss = running_loss / total
-        return loss, accuracy
-    else:
-        return None, accuracy
+    return loss, accuracy
 
 def prepare_data_loaders(dataset, batch_size=BATCH_SIZE, val_split=VAL_SPLIT):
     """
