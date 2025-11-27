@@ -63,9 +63,8 @@ The model is a simple CNN with the following architecture:
 ## Data Augmentation
 The `generate_augmented_data` script will:
 1. Copy all original images from `data_original` to a new `data` directory
-2. Generate 5 translated versions of each image
-3. Generate 5 rotated versions of each image
-4. Save all images in the same character directory structure
+2. Generate 15 rotated and translated versions of each image
+3. Save all images in the same character directory structure
 
 ### Augmentation Techniques Used:
 1. **Translation**: Moves the image randomly in X and Y directions

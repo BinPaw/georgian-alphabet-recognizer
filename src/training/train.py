@@ -79,7 +79,7 @@ def train_model(model, train_loader, val_loader, epochs=EPOCHS, lr=LEARNING_RATE
         history['train_acc'].append(train_acc)
         
         # Validation phase
-        val_loss, val_acc = evaluate_model(model, val_loader, criterion)
+        val_loss, val_acc = evaluate_model(model, val_loader)
         history['val_loss'].append(val_loss)
         history['val_acc'].append(val_acc)
         

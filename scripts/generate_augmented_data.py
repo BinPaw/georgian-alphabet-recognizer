@@ -64,27 +64,39 @@ def main():
                 print(f"Warning: Could not read {src_img_path}: {e}")
                 continue
             
-            # Generate 5 translated versions
-            for i in range(5):
-                # Apply translation
-                translated_img = translate_image(img)
+            # # Generate 5 translated versions
+            # for i in range(5):
+            #     # Apply translation
+            #     translated_img = translate_image(img)
                 
-                # Save translated image
-                filename, ext = os.path.splitext(img_file)
-                aug_filename = f"{filename}_trans{i}{ext}"
-                aug_path = os.path.join(dst_char_path, aug_filename)
-                translated_img.save(aug_path)
+            #     # Save translated image
+            #     filename, ext = os.path.splitext(img_file)
+            #     aug_filename = f"{filename}_trans{i}{ext}"
+            #     aug_path = os.path.join(dst_char_path, aug_filename)
+            #     translated_img.save(aug_path)
             
-            # Generate 5 rotated versions
-            for i in range(5):
+            # # Generate 5 rotated versions
+            # for i in range(5):
+            #     # Apply rotation
+            #     rotated_img = rotate_image(img)
+                
+            #     # Save rotated image
+            #     filename, ext = os.path.splitext(img_file)
+            #     aug_filename = f"{filename}_rot{i}{ext}"
+            #     aug_path = os.path.join(dst_char_path, aug_filename)
+            #     rotated_img.save(aug_path)
+            
+            # Generate 5 rotated and translated versions
+            for i in range(15):
                 # Apply rotation
                 rotated_img = rotate_image(img)
+                rotated_translated_img = translate_image(rotated_img)
                 
-                # Save rotated image
+                # Save rotated and translated image
                 filename, ext = os.path.splitext(img_file)
-                aug_filename = f"{filename}_rot{i}{ext}"
+                aug_filename = f"{filename}_rot_trans{i}{ext}"
                 aug_path = os.path.join(dst_char_path, aug_filename)
-                rotated_img.save(aug_path)
+                rotated_translated_img.save(aug_path)
 
 if __name__ == "__main__":
     main() 
