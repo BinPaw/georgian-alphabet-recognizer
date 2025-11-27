@@ -27,9 +27,6 @@ class GeorgianHandwrittenDataset(ImageFolder):
             transform = get_transform()
         
         super().__init__(root_dir, transform=transform)
-        
-        # Map class indices to Georgian alphabet characters
-        self.idx_to_char = {v: k for k, v in self.class_to_idx.items()}
     
     def __getitem__(self, index):
         """
