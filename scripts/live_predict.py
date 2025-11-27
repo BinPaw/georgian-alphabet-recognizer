@@ -69,7 +69,7 @@ class DrawingApp:
         self.clear_button.pack(side=tk.LEFT, padx=10)
         
         self.predict_button = tk.Button(self.control_frame, text="Predict", command=self.predict)
-        self.predict_button.pack(side=tk.RIGHT, padx=10)
+        # self.predict_button.pack(side=tk.RIGHT, padx=10)
         
         # Last mouse position
         self.last_x, self.last_y = None, None
@@ -105,6 +105,8 @@ class DrawingApp:
             )
         
         self.last_x, self.last_y = x, y
+        
+        self.predict()
     
     def clear(self):
         """Clear the canvas and image."""
