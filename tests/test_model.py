@@ -5,6 +5,7 @@ Tests for the CNN model.
 import sys
 import os
 
+# Add parent directory to path to allow importing from src
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 import unittest
